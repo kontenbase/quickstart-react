@@ -3,16 +3,17 @@ import { kontenbase } from '../lib/kontenbase';
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
   const [username, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const navigate = useNavigate();
+
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    const response = await kontenbase.auth.register({
+    const { user, error } = await kontenbase.auth.register({
       firstName,
       lastName,
       username,
@@ -20,15 +21,21 @@ const Register = () => {
       password,
     });
 
-    await kontenbase.service('profile').create({
-      Users: [response.user?._id],
-    });
-    if (response.status === 200) {
-      alert('register success');
-      navigate('/myaccount');
-    } else {
-      alert(response.error.message);
+    if (error) {
+      alert(error.message);
+      return;
     }
+
+    const { error: ErrorProfile } = await kontenbase.service('profile').create({
+      Users: [user._id],
+    });
+
+    if (ErrorProfile) {
+      alert(ErrorProfile.message);
+      return;
+    }
+
+    navigate('/myaccount');
   };
 
   return (

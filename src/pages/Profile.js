@@ -3,9 +3,9 @@ import { kontenbase } from '../lib/kontenbase';
 import { useParams } from 'react-router-dom';
 
 const Profile = () => {
+  const params = useParams();
   const [user, setUser] = React.useState();
   const [profile, setProfile] = React.useState();
-  const params = useParams();
 
   React.useEffect(() => {
     getUser();

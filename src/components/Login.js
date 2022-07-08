@@ -2,25 +2,25 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { kontenbase } from '../lib/kontenbase';
 
-const Login = ({ setUser }) => {
+const Login = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const navigate = useNavigate();
-
   const handleLogin = async (e) => {
     e.preventDefault();
-    const response = await kontenbase.auth.login({
+
+    const { error } = await kontenbase.auth.login({
       username,
       password,
     });
 
-    if (response.status === 200) {
-      setUser(response.user);
-      navigate('/myaccount');
-    } else {
-      alert(response.error?.message);
+    if (error) {
+      alert(error.message);
+      return;
     }
+
+    navigate('/myaccount');
   };
 
   return (

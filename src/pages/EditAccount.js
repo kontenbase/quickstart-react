@@ -3,6 +3,7 @@ import { kontenbase } from '../lib/kontenbase';
 import { useNavigate } from 'react-router-dom';
 
 const EditAccount = () => {
+  const navigate = useNavigate();
   const [profileId, setProfileId] = React.useState('');
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
@@ -13,8 +14,6 @@ const EditAccount = () => {
   const [loading, setLoading] = React.useState(false);
   const [image, setImage] = React.useState('');
   const [website, setWebsite] = React.useState('');
-
-  const navigate = useNavigate();
 
   React.useEffect(() => {
     getUser();
