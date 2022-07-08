@@ -16,59 +16,75 @@ const EditAccount = () => {
   const [website, setWebsite] = React.useState('');
 
   React.useEffect(() => {
-    getUser();
+    (async () => {
+      const { user, error } = await kontenbase.auth.user({
+        lookup: '*',
+      });
+
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      const profile = user?.profile?.[0];
+      setProfileId(profile?._id);
+      setFirstName(user?.firstName);
+      setLastName(user?.lastName);
+      setphoneNumber(user?.phoneNumber);
+      setImage(profile?.image);
+      setCompany(profile?.company);
+      setLocation(profile?.location);
+      setPosition(profile?.position);
+      setWebsite(profile?.website);
+    })();
   }, []);
 
-  const getUser = async () => {
-    const { user, error } = await kontenbase.auth.user({
-      lookup: '*',
-    });
-    const profile = user.profile[0];
-    setProfileId(profile?._id);
-    setFirstName(user?.firstName);
-    setLastName(user?.lastName);
-    setphoneNumber(user?.phoneNumber);
-    setImage(profile?.image);
-    setCompany(profile?.company);
-    setLocation(profile?.location);
-    setPosition(profile?.position);
-    setWebsite(profile?.website);
-  };
-
   const handleLogout = async () => {
-    const response = await kontenbase.auth.logout();
-    if (response.status === 200) {
-      navigate('/');
+    const { error } = await kontenbase.auth.logout();
+
+    if (error) {
+      console.log(error);
+      return;
     }
+
+    navigate('/');
   };
 
   const handleChangeImage = async (e) => {
     setLoading(true);
     const file = e.target.files[0];
-    const { data, error } = await kontenbase.storage.upload(file);
+    const { data, error: uploadError } = await kontenbase.storage.upload(file);
 
-    if (error) {
-      alert(error.message);
-    } else {
-      const response = await kontenbase
-        .service('profile')
-        .updateById(profileId, {
-          image: data.url,
-        });
-      setImage(response?.data?.image);
+    if (uploadError) {
+      alert(uploadError.message);
+      return;
     }
+
+    const { error: updateError } = await kontenbase
+      .service('profile')
+      .updateById(profileId, {
+        image: data?.url,
+      });
+
+    if (updateError) {
+      alert(updateError.message);
+      return;
+    }
+
+    setImage(data?.image);
     setLoading(false);
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const { status, error } = await kontenbase.auth.update({
+
+    const { error: userError } = await kontenbase.auth.update({
       lastName,
       firstName,
       phoneNumber,
     });
 
-    const { status: profileStatus } = await kontenbase
+    const { error: profileError } = await kontenbase
       .service('profile')
       .updateById(profileId, {
         company,
@@ -77,21 +93,24 @@ const EditAccount = () => {
         website,
       });
 
-    if (status === 200 || profileStatus === 200) {
-      alert('Update success');
-      navigate('/myaccount');
-    } else {
-      alert(error.message);
+    if (userError || profileError) {
+      return;
     }
+
+    navigate('/myaccount');
+  };
+
+  const handleGotoBack = () => {
+    navigate('/myaccount');
   };
 
   return (
     <div className="profile-page">
       <div className="button-top">
-        <button className="button-back" onClick={() => navigate('/myaccount')}>
+        <button className="button-back" onClick={handleGotoBack}>
           Back
         </button>
-        <button onClick={() => handleLogout()}>Logout</button>
+        <button onClick={handleLogout}>Logout</button>
       </div>
       <div className="profile-wrapper">
         <div className="profile-header">
@@ -106,11 +125,7 @@ const EditAccount = () => {
             <label className="label-file" htmlFor="file">
               {loading ? 'Loading...' : 'Change Image'}
             </label>
-            <input
-              onChange={(e) => handleChangeImage(e)}
-              id="file"
-              type="file"
-            />
+            <input onChange={handleChangeImage} id="file" type="file" />
           </div>
         </div>
         <div className="card">
@@ -118,20 +133,23 @@ const EditAccount = () => {
             <div className="card-field">
               <label>First Name</label>
               <input
-                value={firstName || ''}
-                onChange={(e) => setFirstName(e.target.value)}
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value) || ''}
               />
             </div>
             <div className="card-field">
               <label>Last Name</label>
               <input
-                value={lastName || ''}
-                onChange={(e) => setLastName(e.target.value)}
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value) || ''}
               />
             </div>
             <div className="card-field">
               <label>Phone Number</label>
               <input
+                type="text"
                 value={phoneNumber || ''}
                 onChange={(e) => setphoneNumber(e.target.value)}
               />
@@ -139,6 +157,7 @@ const EditAccount = () => {
             <div className="card-field">
               <label>Company</label>
               <input
+                type="text"
                 value={company || ''}
                 onChange={(e) => setCompany(e.target.value)}
               />
@@ -146,6 +165,7 @@ const EditAccount = () => {
             <div className="card-field">
               <label>Position</label>
               <input
+                type="text"
                 value={position || ''}
                 onChange={(e) => setPosition(e.target.value)}
               />
@@ -153,6 +173,7 @@ const EditAccount = () => {
             <div className="card-field">
               <label>Location</label>
               <input
+                type="text"
                 value={location || ''}
                 onChange={(e) => setLocation(e.target.value)}
               />
@@ -166,7 +187,6 @@ const EditAccount = () => {
                 onChange={(e) => setWebsite(e.target.value)}
               />
             </div>
-
             <div className="form-button">
               <button type="submit" className="button button-primary">
                 Update
