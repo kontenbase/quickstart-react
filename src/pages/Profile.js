@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import * as React from 'react';
 import { kontenbase } from '../lib/kontenbase';
 import { useParams } from 'react-router-dom';
 
 const Profile = () => {
-  const [user, setUser] = useState();
-  const [profile, setProfile] = useState();
+  const [user, setUser] = React.useState();
+  const [profile, setProfile] = React.useState();
   const params = useParams();
 
-  useEffect(() => {
+  React.useEffect(() => {
     getUser();
   }, []);
 

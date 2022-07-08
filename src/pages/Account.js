@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import * as React from 'react';
 import { kontenbase } from '../lib/kontenbase';
 import { useNavigate } from 'react-router-dom';
 
 const Account = () => {
-  const [user, setUser] = useState();
-  const [shareProfile, setShareProfile] = useState('');
+  const [user, setUser] = React.useState();
+  const [shareProfile, setShareProfile] = React.useState('');
   const navigate = useNavigate();
-  useEffect(() => {
+  React.useEffect(() => {
     getUser();
   }, []);
 

@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import * as React from 'react';
 import { kontenbase } from '../lib/kontenbase';
 import { useNavigate } from 'react-router-dom';
 
 const EditAccount = () => {
-  const [profileId, setProfileId] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phoneNumber, setphoneNumber] = useState('');
-  const [company, setCompany] = useState('');
-  const [position, setPosition] = useState('');
-  const [location, setLocation] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState('');
-  const [website, setWebsite] = useState('');
+  const [profileId, setProfileId] = React.useState('');
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
+  const [phoneNumber, setphoneNumber] = React.useState('');
+  const [company, setCompany] = React.useState('');
+  const [position, setPosition] = React.useState('');
+  const [location, setLocation] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+  const [image, setImage] = React.useState('');
+  const [website, setWebsite] = React.useState('');
 
   const navigate = useNavigate();
 
-  useEffect(() => {
+  React.useEffect(() => {
     getUser();
   }, []);
 

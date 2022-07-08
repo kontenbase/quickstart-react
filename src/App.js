@@ -5,7 +5,8 @@ import Auth from './pages/Auth';
 import EditAccount from './pages/EditAccount';
 import Account from './pages/Account';
 import Profile from './pages/Profile';
-function App() {
+
+const App = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -16,6 +17,6 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

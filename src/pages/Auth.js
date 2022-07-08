@@ -1,37 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import * as React from 'react';
 import Login from '../components/Login';
 import Register from '../components/Register';
 import { kontenbase } from '../lib/kontenbase';
 import { useNavigate } from 'react-router-dom';
 
 const Auth = () => {
-  const [switchAuthForm, setSwitchAuthForm] = useState('register');
-  const [user, setUser] = useState();
   const navigate = useNavigate();
-  useEffect(() => {
-    getUser();
-    if (user) {
-      navigate('myaccount');
-    }
-  }, [user]);
+  const [switchAuthForm, setSwitchAuthForm] = React.useState('register');
 
-  const getUser = async () => {
-    const response = await kontenbase.auth.user();
-    setUser(response?.user);
+  React.useEffect(() => {
+    (async () => {
+      const { error } = await kontenbase.auth.user();
+
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      navigate('myaccount');
+    })();
+  }, []);
+
+  const handleRegisterForm = () => {
+    setSwitchAuthForm('register');
+  };
+
+  const handleLoginForm = () => {
+    setSwitchAuthForm('login');
   };
 
   return (
     <div className="auth-page">
       <div className="auth-button">
-        <button onClick={() => setSwitchAuthForm('register')}>Register</button>
-        <button onClick={() => setSwitchAuthForm('login')}>Login</button>
+        <button onClick={handleRegisterForm}>Register</button>
+        <button onClick={handleLoginForm}>Login</button>
       </div>
-
-      {switchAuthForm === 'register' ? (
-        <Register />
-      ) : (
-        <Login setUser={setUser} />
-      )}
+      {switchAuthForm === 'register' ? <Register /> : <Login />}
     </div>
   );
 };
