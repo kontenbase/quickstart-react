@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Auth = () => {
   const navigate = useNavigate();
-  const [switchAuthForm, setSwitchAuthForm] = React.useState('register');
+  const [switchAuthForm, setSwitchAuthForm] = React.useState('login');
 
   React.useEffect(() => {
     (async () => {
@@ -32,8 +32,8 @@ const Auth = () => {
   return (
     <div className="auth-page">
       <div className="auth-button">
-        <button onClick={handleRegisterForm}>Register</button>
         <button onClick={handleLoginForm}>Login</button>
+        <button onClick={handleRegisterForm}>Register</button>
       </div>
       {switchAuthForm === 'register' ? <Register /> : <Login />}
     </div>
