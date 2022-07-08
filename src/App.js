@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Auth from './pages/Auth';
 import EditAccount from './pages/EditAccount';
