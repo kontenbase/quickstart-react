@@ -70,21 +70,15 @@ const Account = () => {
                 width={90}
                 height={90}
                 src={
-                  user?.profile?.[0]?.image
-                    ? user.profile[0].image
-                    : 'https://via.placeholder.com/90'
+                  user?.profile?.[0]?.image ?? 'https://via.placeholder.com/90'
                 }
                 alt=""
               />
               <h3 className="profile-title">
-                <span>{user?.firstName}</span>
-                {user?.lastName ? <span> {user.lastName}</span> : ''}
+                <span>{user?.firstName}</span>{' '}
+                <span>{user?.lastName ?? ''}</span>
               </h3>
-              <p>
-                {user?.profile?.[0]?.position
-                  ? user.profile[0].position
-                  : 'position is null'}
-              </p>
+              <p>{user?.profile?.[0]?.position ?? 'position is null'}</p>
             </div>
             <div className="card">
               <div className="share-contact">
@@ -96,17 +90,12 @@ const Account = () => {
               <div className="card-field">
                 <span>Name</span>
                 <p>
-                  {user?.firstName}
-                  {user?.lastName ? ' ' + user.lastName : ''}
+                  {user?.firstName} {user?.lastName ?? ''}
                 </p>
               </div>
               <div className="card-field">
                 <span>Mobile</span>
-                <p>
-                  {user?.phoneNumber
-                    ? user.phoneNumber
-                    : 'phone number is null'}
-                </p>
+                <p>{user?.phoneNumber ?? 'phone number is null'}</p>
               </div>
               <div className="card-field">
                 <span>Email</span>
@@ -116,24 +105,18 @@ const Account = () => {
               </div>
               <div className="card-field">
                 <span>Company</span>
-                <p>
-                  {user?.profile?.[0]?.company
-                    ? user.profile[0].company
-                    : 'company is null'}
-                </p>
+                <p>{user?.profile?.[0]?.company ?? 'company is null'}</p>
               </div>
             </div>
             <div className="card">
               <h3>Location</h3>
-              <p>{user?.profile?.[0]?.location}</p>
+              <p>{user?.profile?.[0]?.location ?? 'location is null'}</p>
             </div>
             <div className="card">
               <h3>Web Links</h3>
               <a
                 className="website-link"
-                href={
-                  user?.profile?.[0]?.website ? user.profile[0].website : ''
-                }
+                href={user?.profile?.[0]?.website ?? ''}
               >
                 Website
               </a>
