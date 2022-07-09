@@ -5,83 +5,91 @@ import { useParams } from 'react-router-dom';
 const Profile = () => {
   const params = useParams();
   const [user, setUser] = React.useState();
-  const [profile, setProfile] = React.useState();
 
   React.useEffect(() => {
-    getUser();
+    (async () => {
+      const { username } = params;
+      const { data: user, error } = await kontenbase.service('Users').find({
+        where: {
+          username,
+        },
+        lookup: '*',
+      });
+
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      setUser(user?.[0]);
+    })();
   }, []);
 
-  const getUser = async () => {
-    const { username } = params;
-    const { data: user } = await kontenbase.service('Users').find({
-      where: {
-        username,
-      },
-      lookup: '*',
-    });
-    setUser(user[0]);
-    setProfile(user[0].profile[0]);
-  };
-
   return (
-    <div className="profile-page">
-      <div className="profile-wrapper">
-        <div className="profile-header">
-          <img
-            width={90}
-            height={90}
-            className="image-avatar"
-            src={
-              profile?.image ? profile?.image : 'https://via.placeholder.com/90'
-            }
-            alt=""
-          />
-          <h3 className="profile-title">
-            <span>{user?.firstName}</span>
-            {user?.lastName ? <span> {user?.lastName}</span> : ''}
-          </h3>
-          <p>{profile?.position ? profile.position : 'null'}</p>
+    <>
+      {!user ? (
+        <div className="not-found">
+          <p>User Not Found</p>
         </div>
-        <div className="card">
-          <h3>Contact</h3>
-          <div className="card-field">
-            <span>Name</span>
-            <p>
-              {user?.firstName}
-              {user?.lastName ? ' ' + user?.lastName : ''}
-            </p>
-          </div>
-          <div className="card-field">
-            <span>Mobile</span>
-            <p>{user?.phoneNumber ? user?.phoneNumber : 'null'}</p>
-          </div>
-          <div className="card-field">
-            <span>Email</span>
-            <a className="link-email" href="mailto:name@email.com">
-              {user?.email}
-            </a>
-          </div>
-          <div className="card-field">
-            <span>Company</span>
-            <p>{profile?.company ? profile?.company : 'null'}</p>
+      ) : (
+        <div className="profile-page">
+          <div className="profile-wrapper">
+            <div className="profile-header">
+              <img
+                className="image-avatar"
+                width={90}
+                height={90}
+                src={
+                  user?.profile?.[0]?.image ?? 'https://via.placeholder.com/90'
+                }
+                alt=""
+              />
+              <h3 className="profile-title">
+                <span>{user?.firstName}</span>{' '}
+                <span>{user?.lastName ?? ''}</span>
+              </h3>
+              <p>{user?.profile?.[0]?.position ?? 'position is null'}</p>
+            </div>
+            <div className="card">
+              <h3>Contact</h3>
+              <div className="card-field">
+                <span>Name</span>
+                <p>
+                  {user?.firstName} {user?.lastName ?? ''}
+                </p>
+              </div>
+              <div className="card-field">
+                <span>Mobile</span>
+                <p>{user?.phoneNumber ?? 'phone number is null'}</p>
+              </div>
+              <div className="card-field">
+                <span>Email</span>
+                <a className="link-email" href="mailto:name@email.com">
+                  {user?.email}
+                </a>
+              </div>
+              <div className="card-field">
+                <span>Company</span>
+                <p>{user?.profile?.[0]?.company ?? 'company is null'}</p>
+              </div>
+            </div>
+            <div className="card">
+              <h3>Location</h3>
+              <p>{user?.profile?.[0]?.location ?? 'location is null'}</p>
+            </div>
+            <div className="card">
+              <h3>Web Links</h3>
+              <a
+                className="website-link"
+                href={user?.profile?.[0]?.website ?? ''}
+              >
+                Website
+              </a>
+            </div>
           </div>
         </div>
-        <div className="card">
-          <h3>Location</h3>
-          <p>{profile?.location}</p>
-        </div>
-        <div className="card">
-          <h3>Web Link</h3>
-          {profile?.website ? (
-            <a className="website-link" href={profile?.website}>
-              {profile?.website}
-            </a>
-          ) : (
-            'null'
-          )}
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
