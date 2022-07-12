@@ -34,10 +34,12 @@ const Account = () => {
 
   const handleShareProfile = (e) => {
     e.preventDefault();
-    navigator.clipboard.writeText(
-      'http://localhost:3000/profile/' + user?.username
-    );
-    alert('Link Copied!');
+    navigator.clipboard
+      .writeText(`${window.location.hostname}/profile/${user?.username}`)
+      .then(
+        () => alert('Link Copied!'),
+        () => alert('Failed to copy. Please open in new window.')
+      );
   };
 
   const handleLogin = () => {
