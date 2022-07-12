@@ -27,6 +27,7 @@ const EditAccount = () => {
       }
 
       const profile = user?.profile?.[0];
+
       setProfileId(profile?._id);
       setFirstName(user?.firstName);
       setLastName(user?.lastName);
@@ -52,6 +53,7 @@ const EditAccount = () => {
 
   const handleChangeImage = async (e) => {
     setLoading(true);
+
     const file = e.target.files[0];
     const { data, error: uploadError } = await kontenbase.storage.upload(file);
 
@@ -83,7 +85,6 @@ const EditAccount = () => {
       firstName,
       phoneNumber,
     });
-
     const { error: profileError } = await kontenbase
       .service('profile')
       .updateById(profileId, {
