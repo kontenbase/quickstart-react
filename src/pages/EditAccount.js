@@ -73,7 +73,7 @@ const EditAccount = () => {
       return;
     }
 
-    setImage(data?.image);
+    setImage(data?.url);
     setLoading(false);
   };
 
