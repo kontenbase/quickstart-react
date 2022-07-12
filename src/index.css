@@ -1,181 +1,179 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Rubik', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Rubik', sans-serif;
 }
 
 button {
-    background-color: transparent;
-    border: none;
-    padding: 8px 12px;
-    font-size: 16px;
-    cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .button-ouline {
-    border: 1px solid  gainsboro;
+  border: 1px solid gainsboro;
 }
 
 .button-primary {
-    background-color: black;
-    color: white;
-  
+  background-color: black;
+  color: white;
 }
 .auth-page {
-    margin: 0 auto;
-    width: 560px;
-    padding: 14px;
+  margin: 0 auto;
+  width: 560px;
+  padding: 14px;
 }
 .auth-button {
-    text-align: right;
-    margin-bottom: 16px;
+  text-align: right;
+  margin-bottom: 16px;
 }
 .auth-page h2 {
-    text-align: center;
+  text-align: center;
 }
 
 .form-group {
-    margin-bottom: 12px;
-    font-size: 16px;
+  margin-bottom: 12px;
+  font-size: 16px;
 }
 .form-group label {
-    display: block;
-    margin-bottom: 4px;
-    font-weight: 500;
-    font-size: 16px;
-    
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 500;
+  font-size: 16px;
 }
 .form-group input {
-    padding: 8px 12px;
-    width: 100%;
-    font-size: 16px;
+  padding: 8px 12px;
+  width: 100%;
+  font-size: 16px;
 }
 
 .form-button {
-    text-align: right;
+  text-align: right;
 }
 
 .profile-page {
-    margin: 0 auto;
-    width: 560px;
+  margin: 0 auto;
+  width: 560px;
 }
 
 .profile-wrapper {
-    background-color: black;
-    padding: 14px;
-    color: white;   
+  background-color: black;
+  padding: 14px;
+  color: white;
 }
 
 .profile-header {
-    text-align: center;
-    padding: 24px 0;
+  text-align: center;
+  padding: 24px 0;
 }
 
 .profile-title {
-    margin: 8px 0;
-    font-size: 24px;
-    font-weight: 600;
-    text-transform: capitalize;
+  margin: 8px 0;
+  font-size: 24px;
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
 .image-avatar {
-    border-radius: 50px;
+  border-radius: 50px;
 }
 
 .card {
-    background-color: white;
-    color: black;
-    border-radius: 2px;
-    padding: 14px;
+  background-color: white;
+  color: black;
+  border-radius: 2px;
+  padding: 14px;
 }
 
-.card:not(:last-child){
-    margin-bottom: 12px;
+.card:not(:last-child) {
+  margin-bottom: 12px;
 }
-
 
 .card h3 {
-    font-weight: 500;
-    margin-bottom: 24px;
+  font-weight: 500;
+  margin-bottom: 24px;
 }
 
-.card-field:not(:last-child){
-    margin-bottom: 12px;
+.card-field:not(:last-child) {
+  margin-bottom: 12px;
 }
 
 .card-field input {
-    font-size: 16px;
+  font-size: 16px;
 }
 
-.card span, .card label {
-    display: block;
-    font-size: 14px;
-    color: gray;
-    margin-bottom: 4px;
+.card span,
+.card label {
+  display: block;
+  font-size: 14px;
+  color: gray;
+  margin-bottom: 4px;
 }
 
 .card input {
-    display: block;
-    font-family: 16px;
-    padding: 8px 8px 8px 0;
-    color: black;
-    width: 100%;
-    border: none;
-    border-bottom: 1px solid gainsboro;
-    outline: none;
-   
+  display: block;
+  font-family: 16px;
+  padding: 8px 8px 8px 0;
+  color: black;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid gainsboro;
+  outline: none;
 }
 
 .button-map {
-    display: block;
-    margin-top: 8px;
+  display: block;
+  margin-top: 8px;
 }
 
 .website-link {
-    text-decoration: none;
-    color: black;
+  text-decoration: none;
+  color: black;
 }
 
 .logout-button {
-    text-align: end;
+  text-align: end;
 }
 
-input[type="file"] {
-    display: none;
+input[type='file'] {
+  display: none;
 }
 
 .label-file {
-    display: block;
-    margin-top: 2px;
-    cursor: pointer;
+  display: block;
+  margin-top: 2px;
+  cursor: pointer;
 }
 
-.not-autheticated, .not-found  {
-    margin-top: 30vh;
-    text-align: center;
+.not-autheticated,
+.not-found {
+  margin-top: 30vh;
+  text-align: center;
 }
 
 .not-autheticated button {
-    border: 1px solid white;
-    margin-top: 16px;
+  border: 1px solid white;
+  margin-top: 16px;
 }
 
 .button-top {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .share-contact {
-    text-align: right;
+  text-align: right;
 }
 .button-share {
-    font-size: 12px;
-    border: 1px solid gainsboro
+  font-size: 12px;
+  border: 1px solid gainsboro;
 }
 
-.link-email{
-    text-decoration: none;
-    color: black;
+.link-email {
+  text-decoration: none;
+  color: black;
 }
