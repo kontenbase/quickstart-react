@@ -82,7 +82,6 @@ const Register = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-
         <div className="form-button">
           <button className="button button-primary" type="sumbit">
             Submit
