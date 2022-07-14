@@ -6,7 +6,7 @@ const EditProfile = () => {
   const navigate = useNavigate();
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
-  const [phoneNumber, setphoneNumber] = React.useState('');
+  const [phoneNumber, setPhoneNumber] = React.useState('');
   const [username, setUsername] = React.useState('');
   const [profileId, setProfileId] = React.useState('');
   const [image, setImage] = React.useState('');
@@ -31,7 +31,7 @@ const EditProfile = () => {
 
       setFirstName(user?.firstName);
       setLastName(user?.lastName);
-      setphoneNumber(user?.phoneNumber);
+      setPhoneNumber(user?.phoneNumber);
       setUsername(user?.username);
       setProfileId(profile?._id);
       setImage(profile?.image);
@@ -144,7 +144,7 @@ const EditProfile = () => {
               <input
                 type="text"
                 value={phoneNumber || ''}
-                onChange={(e) => setphoneNumber(e.target.value)}
+                onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>
             <div className="card-field">
