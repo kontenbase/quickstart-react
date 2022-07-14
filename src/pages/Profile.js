@@ -25,6 +25,10 @@ const Profile = () => {
 
   React.useEffect(() => {
     (async () => {
+      if (!username) {
+        return;
+      }
+
       const { data, error } = await kontenbase.service('Users').find({
         where: {
           username,

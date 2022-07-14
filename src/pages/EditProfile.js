@@ -96,6 +96,8 @@ const EditProfile = () => {
 
     if (userError || profileError) {
       alert('Failed to update profile');
+    } else {
+      alert('Profile updated!');
     }
   };
 
