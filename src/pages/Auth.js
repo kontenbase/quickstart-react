@@ -17,7 +17,7 @@ const Auth = () => {
         return;
       }
 
-      navigate('myaccount');
+      navigate('/profile');
     })();
   }, []);
 

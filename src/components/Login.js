@@ -20,7 +20,7 @@ const Login = () => {
       return;
     }
 
-    navigate('/myaccount');
+    navigate('/profile');
   };
 
   return (

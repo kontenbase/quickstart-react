@@ -35,7 +35,7 @@ const Register = () => {
       return;
     }
 
-    navigate('/myaccount');
+    navigate('/profile');
   };
 
   return (

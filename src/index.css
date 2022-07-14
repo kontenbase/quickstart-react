@@ -123,10 +123,17 @@ input[type='file'] {
   display: none;
 }
 .label-file {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 2px;
   cursor: pointer;
 }
+
+.label-file span {
+  margin-top: 10px;
+}
+
 .not-autheticated {
   margin-top: 30vh;
   text-align: center;

@@ -2,18 +2,19 @@ import * as React from 'react';
 import { kontenbase } from '../lib/kontenbase';
 import { useNavigate } from 'react-router-dom';
 
-const EditAccount = () => {
+const EditProfile = () => {
   const navigate = useNavigate();
-  const [profileId, setProfileId] = React.useState('');
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
   const [phoneNumber, setphoneNumber] = React.useState('');
+  const [username, setUsername] = React.useState('');
+  const [profileId, setProfileId] = React.useState('');
+  const [image, setImage] = React.useState('');
   const [company, setCompany] = React.useState('');
   const [position, setPosition] = React.useState('');
   const [location, setLocation] = React.useState('');
-  const [loading, setLoading] = React.useState(false);
-  const [image, setImage] = React.useState('');
   const [website, setWebsite] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     (async () => {
@@ -28,10 +29,11 @@ const EditAccount = () => {
 
       const profile = user?.profile?.[0];
 
-      setProfileId(profile?._id);
       setFirstName(user?.firstName);
       setLastName(user?.lastName);
       setphoneNumber(user?.phoneNumber);
+      setUsername(user?.username);
+      setProfileId(profile?._id);
       setImage(profile?.image);
       setCompany(profile?.company);
       setLocation(profile?.location);
@@ -39,6 +41,10 @@ const EditAccount = () => {
       setWebsite(profile?.website);
     })();
   }, []);
+
+  const handleViewProfile = () => {
+    navigate(`/${username}`);
+  };
 
   const handleLogout = async () => {
     const { error } = await kontenbase.auth.logout();
@@ -56,20 +62,14 @@ const EditAccount = () => {
 
     const file = e.target.files[0];
     const { data, error: uploadError } = await kontenbase.storage.upload(file);
-
-    if (uploadError) {
-      alert(uploadError.message);
-      return;
-    }
-
     const { error: updateError } = await kontenbase
       .service('profile')
       .updateById(profileId, {
         image: data?.url,
       });
 
-    if (updateError) {
-      alert(updateError.message);
+    if (uploadError || updateError) {
+      alert('Failed to change image profile');
       return;
     }
 
@@ -95,39 +95,29 @@ const EditAccount = () => {
       });
 
     if (userError || profileError) {
-      return;
+      alert('Failed to update profile');
     }
-
-    navigate('/myaccount');
-  };
-
-  const handleGotoBack = () => {
-    navigate('/myaccount');
   };
 
   return (
     <div className="profile-page">
       <div className="button-top">
-        <button className="button-back" onClick={handleGotoBack}>
-          Back
-        </button>
+        <button onClick={handleViewProfile}>View Profile</button>
         <button onClick={handleLogout}>Logout</button>
       </div>
       <div className="profile-wrapper">
         <div className="profile-header">
-          <img
-            className="image-avatar"
-            width={90}
-            height={90}
-            src={image ? image : 'https://via.placeholder.com/90'}
-            alt=""
-          />
-          <div>
-            <label className="label-file" htmlFor="file">
-              {loading ? 'Loading...' : 'Change Image'}
-            </label>
-            <input onChange={handleChangeImage} id="file" type="file" />
-          </div>
+          <label className="label-file" htmlFor="file">
+            <img
+              className="image-avatar"
+              width={90}
+              height={90}
+              src={image ? image : 'https://via.placeholder.com/90'}
+              alt=""
+            />
+            <span>{loading ? 'Uploading...' : 'Change Image'}</span>
+          </label>
+          <input onChange={handleChangeImage} id="file" type="file" />
         </div>
         <div className="card">
           <form onSubmit={handleUpdate}>
@@ -200,4 +190,4 @@ const EditAccount = () => {
   );
 };
 
-export default EditAccount;
+export default EditProfile;
